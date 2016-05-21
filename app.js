@@ -13,13 +13,20 @@ function classical_rut(_value){
   return (v === _value.slice(-1));
 }
 
+function cleanFormat(rut){
+  return rut.match(/[0-9Kk]+/g).join('');
+}
+
+function verifyFormat(rut){
+  return (typeof rut === 'string') && (/^(\d{7,8}\-(\d|k))$|^(\d{1,2}\.\d{3}\.\d{3}\-(\d|k){1})$|^(\d{8,9})$/i).test(rut);
+}
 
 function myRutValidate(rut){
   rut = rut.trim();
   
-  if((typeof rut === 'string') && (/^(\d{7,8}\-(\d|k))$|^(\d{1,2}\.\d{3}\.\d{3}\-(\d|k){1})$|^(\d{8,9})$/i).test(rut)) return false;
+  if(!verifyFormat(rut)) return false;
   
-  rut = rut.match(/[0-9Kk]+/g).join('');
+  rut = cleanFormat(rut);
 
   var f = 2,
       s = 0,
